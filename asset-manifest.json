@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Welbex/static/css/main.e88b7dc2.chunk.css",
+    "main.js": "/Welbex/static/js/main.d61d843a.chunk.js",
+    "main.js.map": "/Welbex/static/js/main.d61d843a.chunk.js.map",
+    "runtime~main.js": "/Welbex/static/js/runtime~main.f437134c.js",
+    "runtime~main.js.map": "/Welbex/static/js/runtime~main.f437134c.js.map",
+    "static/js/2.e34c9e85.chunk.js": "/Welbex/static/js/2.e34c9e85.chunk.js",
+    "static/js/2.e34c9e85.chunk.js.map": "/Welbex/static/js/2.e34c9e85.chunk.js.map",
+    "index.html": "/Welbex/index.html",
+    "precache-manifest.93347b81c971857fd649c457fbd018df.js": "/Welbex/precache-manifest.93347b81c971857fd649c457fbd018df.js",
+    "service-worker.js": "/Welbex/service-worker.js",
+    "static/css/main.e88b7dc2.chunk.css.map": "/Welbex/static/css/main.e88b7dc2.chunk.css.map"
+  }
+}
