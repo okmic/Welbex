@@ -5,9 +5,16 @@ type PropsType = {
     more: string
     less: string
 }
-export const SelectCom: React.FC<PropsType> = ({setSelect}) => <select onChange={(e) => setSelect(e.target.value)}>
-<option value="">Nothing</option>
-<option value="moreDistance">More</option>
-<option value="lessDistance">Les</option>
-<option value="equality">Equality</option>
-</select>
+export const SelectCom: React.FC<PropsType> = ({setSelect}) => {
+
+    const onChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelect(e.target.value)
+    }
+
+    return <select onChange={(e) => onChangeSelect(e)}>
+    <option value="">Nothing</option>
+    <option value="moreDistance">More</option>
+    <option value="lessDistance">Les</option>
+    <option value="equality">Equality</option>
+    </select>
+}

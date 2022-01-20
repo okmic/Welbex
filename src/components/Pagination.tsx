@@ -1,11 +1,17 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from 'react'
+import { NavLink } from 'react-router-dom'
 
-const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
-  const pageNumbers = [];
+type PropsType = {
+  postsPerPage: number
+  totalPosts: number
+  paginate: (n: number) => void
+}
+
+const Pagination: React.FC<PropsType> = ({ postsPerPage, totalPosts, paginate }) => {
+  const pageNumbers = []
 
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
-    pageNumbers.push(i);
+    pageNumbers.push(i)
   }
 
   return (
@@ -22,7 +28,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
         ))}
       </ul>
     </nav>
-  );
-};
+  )
+}
 
 export default Pagination;

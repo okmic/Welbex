@@ -1,15 +1,29 @@
 import React, { useEffect, useState } from 'react'
+import { Data } from '../App';
 import { contains, equality, switchMorLess } from '../auxiliary/sortFunctions';
 import { SelectCom } from './Select';
 
+type PropsType = {
+  posts: Array<Data>
+  loading: boolean
+  setPosts: (p: Array<Data>) => void
+  currentPage: number
+  postsPerPage: number
+  sort: boolean
+  setSort: (s: boolean) => void
+  setStateOrder: (o: boolean) => void
+  stateOrder: boolean
+}
 
-const Posts = ({ posts, loading, setPosts, currentPage, postsPerPage, sort, setSort, setStateOrder}) => {
+export type SwitchType =  "moreAmount" | "lessAmount" | "moreDistance" | "lessDistance" | "equality" | "nothing"
 
-  const [currentPosts, setCurrentPosts] = useState([])
-  const [select, setSelect] = useState('')
+const Posts: React.FC<PropsType> = ({ posts, loading, setPosts, currentPage, postsPerPage, sort, setSort, setStateOrder, stateOrder}) => {
+  
+  const [currentPosts, setCurrentPosts] = useState<Array<Data>>([])
+  const [select, setSelect] = useState('') 
   const [value, setValue] = useState('')
 
-  const onChangeInput = (event) => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
   }
 
@@ -39,11 +53,11 @@ const Posts = ({ posts, loading, setPosts, currentPage, postsPerPage, sort, setS
     <thead>
       <tr>
         <th scope="col">
-            <button onClick={() => setStateOrder(prev => !prev)}>Remove Filters <sup>Х</sup></button>
+            <button onClick={() => setStateOrder(!stateOrder)}>Remove Filters <sup>Х</sup></button>
         </th>
         <th scope="col">
           <input type="text" value={value} onChange={(event) => onChangeInput(event)} />
-          <button onClick={() => contains(posts, setPosts, value)}>search</button>
+          <button onClick={() => contains(posts, setPosts, value, sort, setSort)}>search</button>
         </th>
         <th scope="col">
           <select onChange={(e) => setSelect(e.target.value)}>

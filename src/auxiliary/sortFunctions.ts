@@ -1,12 +1,25 @@
-export const moreOrLess = (minmax, posts, setPosts, item, sort, setSort) => {
+import { Data } from "../App"
+
+export const moreOrLess = (
+    minmax: "min" | "max", 
+    posts: Array<Data>, 
+    setPosts: (p: Array<Data>) => void, 
+    item: "amount" | "distance", 
+    sort: boolean, 
+    setSort: (s: boolean) => void ) => {
 if(minmax === "min") {
     switch (item) {
         case "amount": {
+            if (posts){
+            //@ts-ignore
             setPosts(posts.sort((a, b) => a.amount > b.amount ? 1 : -1))
             setSort(!sort)
             break
+            }
+            
         }
         case "distance": {
+            //@ts-ignore
             setPosts(posts.sort((a, b) => a.distance > b.distance ? 1 : -1))
             setSort(!sort)
             break
@@ -18,11 +31,13 @@ if(minmax === "min") {
 } else {
     switch (item) {
         case "amount": {
+            //@ts-ignore
             setPosts(posts.sort((a, b) => a.amount > b.amount ? -1 : 1))
             setSort(!sort)
             break
         }
         case "distance": {
+            //@ts-ignore
             setPosts(posts.sort((a, b) => a.distance > b.distance ? -1 : 1))
             setSort(!sort)
             break
@@ -33,17 +48,29 @@ if(minmax === "min") {
     }
 }
 }
-export const equality = (posts, setPosts) => {
+export const equality = (posts: Array<Data>, setPosts: (p: Array<Data>) => void) => {
     setPosts(posts.filter(i => {
      return i.amount === i.distance
  }))
 }
-export const contains = (posts, setPosts, value) => {
+
+export const contains = (
+    posts: Array<Data>, 
+    setPosts: (p: Array<Data>) => void, 
+    value: string, 
+    sort: boolean, 
+    setSort: (s: boolean) => void ) => {
     setPosts(posts.filter(i => {
         return value === i.title
     }))
+    setSort(!sort)
 }
-export const switchMorLess = (type, posts, setPosts, sort, setSort ) => {
+export const switchMorLess = (
+    type: string,
+    posts: Array<Data>,
+    setPosts: (p: Array<Data>) => void,
+    sort: boolean,
+    setSort: (s: boolean) => void ) => {
     switch (type) {
         case "moreAmount": {
             moreOrLess("max", posts, setPosts, "amount", sort, setSort)
