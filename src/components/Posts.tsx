@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { Data } from '../App';
-import { contains, equality, switchMorLess } from '../auxiliary/sortFunctions';
-import { SelectCom } from './Select';
+import { contains, switchMorLess } from '../auxiliary/sortFunctions';
+import SelectCom  from './Select';
 
 type PropsType = {
   posts: Array<Data>
@@ -15,8 +15,6 @@ type PropsType = {
   stateOrder: boolean
 }
 
-export type SwitchType =  "moreAmount" | "lessAmount" | "moreDistance" | "lessDistance" | "equality" | "nothing"
-
 const Posts: React.FC<PropsType> = ({ posts, loading, setPosts, currentPage, postsPerPage, sort, setSort, setStateOrder, stateOrder}) => {
   
   const [currentPosts, setCurrentPosts] = useState<Array<Data>>([])
@@ -26,7 +24,12 @@ const Posts: React.FC<PropsType> = ({ posts, loading, setPosts, currentPage, pos
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
   }
+  const handleSearch = () => {
+    contains(posts, setPosts, value, sort, setSort)
+    setSelect('')
+  }
 
+//get 10 objects for page
   useEffect(() => {
     const indexOfLastPost = currentPage * postsPerPage
     const indexOfFirstPost = indexOfLastPost - postsPerPage
@@ -34,9 +37,11 @@ const Posts: React.FC<PropsType> = ({ posts, loading, setPosts, currentPage, pos
   }, [posts, currentPage, sort, postsPerPage])
 
   useEffect(() => {
-      switchMorLess(select, posts, setPosts, sort, setSort)
+    //sort swiches
+    switchMorLess(select, posts, setPosts, sort, setSort, setSelect)
   }, [select])
 
+  
   if (loading) {
     return <h2>Loading...</h2>;
   }
@@ -53,19 +58,14 @@ const Posts: React.FC<PropsType> = ({ posts, loading, setPosts, currentPage, pos
     <thead>
       <tr>
         <th scope="col">
-            <button onClick={() => setStateOrder(!stateOrder)}>Remove Filters <sup>Х</sup></button>
+            <button onClick={() => setStateOrder(!stateOrder)}>Remove Filters <sup>&#10006;</sup></button>
         </th>
         <th scope="col">
           <input type="text" value={value} onChange={(event) => onChangeInput(event)} />
-          <button onClick={() => contains(posts, setPosts, value, sort, setSort)}>search</button>
+          <button onClick={handleSearch}>search</button>
         </th>
         <th scope="col">
-          <select onChange={(e) => setSelect(e.target.value)}>
-            <option value="">Nothing</option>
-            <option value="moreAmount">More</option>
-            <option value="lessAmount">Les</option>
-            <option value="equality">Equality</option>
-          </select>
+        <SelectCom less='moreAmount' more='lessAmount' setSelect={setSelect} />
         </th>
         <th scope="col">
         <SelectCom less='lessDistance' more='moreDistance' setSelect={setSelect} />
@@ -80,9 +80,7 @@ const Posts: React.FC<PropsType> = ({ posts, loading, setPosts, currentPage, pos
         <td>{table.distance}</td>
       </tr>
     </tbody>)}
-
   </table>
-
 }
 
-export default Posts;
+export default memo(Posts)

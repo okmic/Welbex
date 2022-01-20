@@ -1,98 +1,114 @@
 import { Data } from "../App"
 
-export const moreOrLess = (
-    minmax: "min" | "max", 
-    posts: Array<Data>, 
-    setPosts: (p: Array<Data>) => void, 
-    item: "amount" | "distance", 
-    sort: boolean, 
-    setSort: (s: boolean) => void ) => {
-if(minmax === "min") {
-    switch (item) {
-        case "amount": {
-            if (posts){
-            //@ts-ignore
-            setPosts(posts.sort((a, b) => a.amount > b.amount ? 1 : -1))
-            setSort(!sort)
-            break
+const _moreOrLess = (
+    minmax: "min" | "max",
+    posts: Array<Data>,
+    setPosts: (p: Array<Data>) => void,
+    item: "amount" | "distance",
+    sort: boolean,
+    setSort: (s: boolean) => void) => {
+    if (minmax === "min") {
+        switch (item) {
+            case "amount": {
+                if (posts) {
+                    //@ts-ignore
+                    setPosts(posts.sort((a, b) => a.amount > b.amount ? 1 : -1))
+                    setSort(!sort)
+                    break
+                } else {
+                    return posts
+                }
             }
-            
+            case "distance": {
+                //@ts-ignore
+                setPosts(posts.sort((a, b) => a.distance > b.distance ? 1 : -1))
+                setSort(!sort)
+                break
+            }
+            default: {
+                return posts
+            }
         }
-        case "distance": {
-            //@ts-ignore
-            setPosts(posts.sort((a, b) => a.distance > b.distance ? 1 : -1))
-            setSort(!sort)
-            break
-        }
-        default: {
-            return posts
-        }
-    }
-} else {
-    switch (item) {
-        case "amount": {
-            //@ts-ignore
-            setPosts(posts.sort((a, b) => a.amount > b.amount ? -1 : 1))
-            setSort(!sort)
-            break
-        }
-        case "distance": {
-            //@ts-ignore
-            setPosts(posts.sort((a, b) => a.distance > b.distance ? -1 : 1))
-            setSort(!sort)
-            break
-        }
-        default: {
-            return posts
+    } else {
+        switch (item) {
+            case "amount": {
+                //@ts-ignore
+                setPosts(posts.sort((a, b) => a.amount > b.amount ? -1 : 1))
+                setSort(!sort)
+                break
+            }
+            case "distance": {
+                //@ts-ignore
+                setPosts(posts.sort((a, b) => a.distance > b.distance ? -1 : 1))
+                setSort(!sort)
+                break
+            }
+            default: {
+                return posts
+            }
         }
     }
 }
-}
-export const equality = (posts: Array<Data>, setPosts: (p: Array<Data>) => void) => {
+const _equality = (posts: Array<Data>, setPosts: (p: Array<Data>) => void) => {
     setPosts(posts.filter(i => {
-     return i.amount === i.distance
- }))
+        return i.amount === i.distance
+    }))
 }
 
 export const contains = (
-    posts: Array<Data>, 
-    setPosts: (p: Array<Data>) => void, 
-    value: string, 
-    sort: boolean, 
-    setSort: (s: boolean) => void ) => {
+    posts: Array<Data>,
+    setPosts: (p: Array<Data>) => void,
+    value: string,
+    sort: boolean,
+    setSort: (s: boolean) => void
+    ) => {
     setPosts(posts.filter(i => {
-        return value === i.title
+        try {
+            return value === i.title
+        }
+        catch {
+            return posts
+        }
     }))
     setSort(!sort)
 }
+
 export const switchMorLess = (
     type: string,
     posts: Array<Data>,
     setPosts: (p: Array<Data>) => void,
     sort: boolean,
-    setSort: (s: boolean) => void ) => {
+    setSort: (s: boolean) => void,
+    setSelect: (s: string) => void
+    ) => {
     switch (type) {
         case "moreAmount": {
-            moreOrLess("max", posts, setPosts, "amount", sort, setSort)
+            _moreOrLess("max", posts, setPosts, "amount", sort, setSort)
+            setSelect('')
             break
         }
         case "lessAmount": {
-            moreOrLess("min", posts, setPosts, "amount", sort, setSort)
+            _moreOrLess("min", posts, setPosts, "amount", sort, setSort)
+            setSelect('')
             break
         }
         case "moreDistance": {
-            moreOrLess("max", posts, setPosts, "distance", sort, setSort)
+            _moreOrLess("max", posts, setPosts, "distance", sort, setSort)
+            setSelect('')
             break
         }
         case "lessDistance": {
-            moreOrLess("min", posts, setPosts, "distance", sort, setSort)
+            _moreOrLess("min", posts, setPosts, "distance", sort, setSort)
+            setSelect('')
             break
         }
         case "equality": {
-            equality(posts, setPosts)
+            _equality(posts, setPosts)
+            setSelect('')
             break
         }
         default: {
+            setSelect('')
             return posts
         }
     }

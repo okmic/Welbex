@@ -38,6 +38,7 @@ const WelBex = () => {
   }
 
   useEffect(() => {
+    setPosts([])
     const fetchPosts = async () => {
       setLoading(true)
       const res = await axios.get('https://jsonplaceholder.typicode.com/posts')
@@ -49,14 +50,10 @@ const WelBex = () => {
     
   }, [stateOrder])
 
-  // Get current posts
-
-
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber)
 
-  return (
-    <div className='container mt-5'>
+  return <div className='container mt-5'>
       <h1 className='text-primary mb-3'>WELBEX</h1>
       <Pagination
         postsPerPage={postsPerPage}
@@ -75,9 +72,8 @@ const WelBex = () => {
       setSort={setSort}
       />
     </div>
+}
 
-  );
-};
 const App = () => <BrowserRouter>
     <Routes>
       <Route path="*" element={<WelBex/>} />
