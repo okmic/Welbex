@@ -1,7 +1,9 @@
 import React, { memo, useEffect, useState } from 'react'
 import { Data } from '../App';
-import { contains, switchMorLess } from '../auxiliary/sortFunctions';
+import { switchMorLess } from './auxiliary/sortFunctions';
+import Input from './Input';
 import SelectCom  from './Select';
+import Table from './Table';
 
 type PropsType = {
   posts: Array<Data>
@@ -10,7 +12,7 @@ type PropsType = {
   currentPage: number
   postsPerPage: number
   sort: boolean
-  setSort: (s: boolean) => void
+  setSort: (s: boolean ) => void
   setStateOrder: (o: boolean) => void
   stateOrder: boolean
 }
@@ -19,15 +21,6 @@ const Posts: React.FC<PropsType> = ({ posts, loading, setPosts, currentPage, pos
   
   const [currentPosts, setCurrentPosts] = useState<Array<Data>>([])
   const [select, setSelect] = useState('') 
-  const [value, setValue] = useState('')
-
-  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value)
-  }
-  const handleSearch = () => {
-    contains(posts, setPosts, value, sort, setSort)
-    setSelect('')
-  }
 
 //get 10 objects for page
   useEffect(() => {
@@ -37,10 +30,14 @@ const Posts: React.FC<PropsType> = ({ posts, loading, setPosts, currentPage, pos
   }, [posts, currentPage, sort, postsPerPage])
 
   useEffect(() => {
-    //sort swiches
+    //sort swiches, a function for external use that allows you to determine which filter to use based on input parameters (greater than, less than, equal to)
     switchMorLess(select, posts, setPosts, sort, setSort, setSelect)
   }, [select])
 
+  const handleSubmit = () => {
+    setStateOrder(!stateOrder)
+    setSort(!sort)
+  }
   
   if (loading) {
     return <h2>Loading...</h2>;
@@ -58,28 +55,26 @@ const Posts: React.FC<PropsType> = ({ posts, loading, setPosts, currentPage, pos
     <thead>
       <tr>
         <th scope="col">
-            <button onClick={() => setStateOrder(!stateOrder)}>Remove Filters <sup>&#10006;</sup></button>
+            <button onClick={handleSubmit}>Remove Filters<sup>&#10006;</sup></button>
         </th>
         <th scope="col">
-          <input type="text" value={value} onChange={(event) => onChangeInput(event)} />
-          <button onClick={handleSearch}>search</button>
+          <Input posts={posts} setPosts={setPosts} 
+          setSelect={setSelect} setSort={setSort}
+          sort={sort} />
         </th>
         <th scope="col">
-        <SelectCom less='moreAmount' more='lessAmount' setSelect={setSelect} />
+        <SelectCom less='lessAmount' more='moreAmount' setSelect={setSelect} />
         </th>
         <th scope="col">
         <SelectCom less='lessDistance' more='moreDistance' setSelect={setSelect} />
         </th>
       </tr>
     </thead>
-    {currentPosts.map(table => <tbody key={table.id}>
-      <tr>
-        <th scope="row">{table.date}</th>
-        <td>{table.title}</td>
-        <td>{table.amount}</td>
-        <td>{table.distance}</td>
-      </tr>
-    </tbody>)}
+    {currentPosts.map(table => <Table key={table.id} 
+    date={table.date} 
+    title={table.title} 
+    amount={table.amount} 
+    distance={table.distance} />)}
   </table>
 }
 

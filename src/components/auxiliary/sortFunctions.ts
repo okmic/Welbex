@@ -1,5 +1,6 @@
-import { Data } from "../App"
+import { Data } from "../../App"
 
+// selects by input parameter which filter to use
 const _moreOrLess = (
     minmax: "min" | "max",
     posts: Array<Data>,
@@ -49,12 +50,14 @@ const _moreOrLess = (
         }
     }
 }
+// checks for equality of two fields "amount === distance"
 const _equality = (posts: Array<Data>, setPosts: (p: Array<Data>) => void) => {
     setPosts(posts.filter(i => {
         return i.amount === i.distance
     }))
 }
 
+// search by the entered data at the input.
 export const contains = (
     posts: Array<Data>,
     setPosts: (p: Array<Data>) => void,
@@ -73,6 +76,7 @@ export const contains = (
     setSort(!sort)
 }
 
+//a function for external use that allows you to determine which filter to use based on input parameters (greater than, less than, equal to)
 export const switchMorLess = (
     type: string,
     posts: Array<Data>,
