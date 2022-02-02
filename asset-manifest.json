@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/Welbex/static/js/main.f3d9ff22.chunk.js",
-    "main.js.map": "/Welbex/static/js/main.f3d9ff22.chunk.js.map",
+    "main.js": "/Welbex/static/js/main.2cfa1c3f.chunk.js",
+    "main.js.map": "/Welbex/static/js/main.2cfa1c3f.chunk.js.map",
     "runtime~main.js": "/Welbex/static/js/runtime~main.f437134c.js",
     "runtime~main.js.map": "/Welbex/static/js/runtime~main.f437134c.js.map",
     "static/js/2.b3d9f585.chunk.js": "/Welbex/static/js/2.b3d9f585.chunk.js",
     "static/js/2.b3d9f585.chunk.js.map": "/Welbex/static/js/2.b3d9f585.chunk.js.map",
     "index.html": "/Welbex/index.html",
-    "precache-manifest.7003f5daea4e12ecfd0542a4b51891ad.js": "/Welbex/precache-manifest.7003f5daea4e12ecfd0542a4b51891ad.js",
+    "precache-manifest.7ad19d48e4b87bb8dc1dc604e7a06625.js": "/Welbex/precache-manifest.7ad19d48e4b87bb8dc1dc604e7a06625.js",
     "service-worker.js": "/Welbex/service-worker.js"
   }
 }
