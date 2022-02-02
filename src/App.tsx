@@ -54,7 +54,7 @@ const WelBex = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber)
 
   return <div className='container mt-5' style={{ maxWidth: "95vw" }}>
-    <h1 className='text-primary mb-3'>WELBEX</h1>
+    <h3 className='text-primary mb-3'>SPA Paginate and Filters only native</h3>
     <Pagination
       postsPerPage={postsPerPage}
       totalPosts={posts.length}
